@@ -1,0 +1,28 @@
+image:
+  repository: ghcr.io/YOUR_ORG/docs-poc
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+readOnlyRootFilesystem: true
+
+ingress:
+  enabled: true
+  host: "docs.internal"
+
+# Place runtime secrets/env vars here (not committed with real values)
+# Example:
+#   GITHUB_TOKEN: "ghp_..."
+#   GITHUB_OWNER: "my-org"
+env: {}
+
+podAnnotations: {}

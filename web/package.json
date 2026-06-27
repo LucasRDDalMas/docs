@@ -18,6 +18,7 @@
     "@radix-ui/react-tooltip": "^1.2.10",
     "diff-match-patch": "^1.0.5",
     "gray-matter": "^4.0.3",
+    "hast": "^0.0.2",
     "iron-session": "^8.0.4",
     "next": "16.2.9",
     "react": "19.2.4",
@@ -27,7 +28,8 @@
     "remark": "^15.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "unified": "^11.0.5"
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@types/diff-match-patch": "^1.0.36",

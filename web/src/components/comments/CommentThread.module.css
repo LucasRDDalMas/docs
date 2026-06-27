@@ -1,0 +1,88 @@
+.thread {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.closed {
+  opacity: 0.6;
+}
+
+.comment {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.reply {
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.author {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+
+.body {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-top: 0.1rem;
+}
+
+.compose {
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.4rem;
+  font-size: var(--text-sm);
+  resize: none;
+  font-family: inherit;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+}
+
+.resolve {
+  background: none;
+  border: none;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.resolve:hover {
+  color: var(--color-text);
+}
+
+.send {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.25rem 0.75rem;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.send:disabled {
+  opacity: 0.4;
+}

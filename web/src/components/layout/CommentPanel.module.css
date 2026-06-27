@@ -1,0 +1,48 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.suggestion {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.diff {
+  font-size: var(--text-sm);
+  margin-bottom: 0.5rem;
+}
+
+.diff del {
+  background: var(--color-suggestion-del);
+  text-decoration: line-through;
+  padding: 0 2px;
+  border-radius: 2px;
+  display: block;
+}
+
+.diff ins {
+  background: var(--color-suggestion-ins);
+  text-decoration: none;
+  padding: 0 2px;
+  border-radius: 2px;
+  display: block;
+  margin-top: 2px;
+}
+
+.empty {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

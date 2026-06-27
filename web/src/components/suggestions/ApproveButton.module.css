@@ -1,0 +1,30 @@
+.btn {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.35rem 0.9rem;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+.accepted {
+  color: oklch(55% 0.18 145);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.waiting {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.error {
+  color: oklch(55% 0.18 25);
+  font-size: var(--text-sm);
+  margin-top: 0.25rem;
+}

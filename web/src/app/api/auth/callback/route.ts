@@ -14,8 +14,9 @@ export async function GET(req: NextRequest) {
       return?: string
     }
     // Only use returnTo if nonce is present (prevents trivially forged states)
-    if (parsed.nonce && parsed.return?.startsWith('/')) {
-      returnTo = parsed.return
+    if (parsed.nonce) {
+      const r = parsed.return ?? ''
+      if (r.startsWith('/') && !r.startsWith('//')) returnTo = r
     }
   } catch {
     // State was malformed or not JSON — use default return

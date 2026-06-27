@@ -2127,7 +2127,7 @@ git commit -m "feat: hybrid search modal with Orama, cmd+k trigger, grouped resu
 
 ---
 
-### Task 12: Inline Comment + Suggestion UI
+### Task 12: Inline Comment + Suggestion UI ✅
 
 **Files:**
 - Create: `web/src/hooks/useSelection.ts`

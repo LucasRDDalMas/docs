@@ -9,17 +9,29 @@ import { DocContent } from '@/components/doc/DocContent'
 
 interface Props { params: Promise<{ slug: string[] }> }
 
+const SAFE_SEGMENT = /^[a-zA-Z0-9_.\- ]+$/
+
+function isValidSlug(segments: string[]): boolean {
+  return segments.length > 0 &&
+    segments.every(s => SAFE_SEGMENT.test(s) && !s.includes('..') && s.length > 0)
+}
+
 export default async function DocPage({ params }: Props) {
   const { slug } = await params
+  if (!isValidSlug(slug)) notFound()
+
   const filePath = `doc/${slug.join('/')}.md`
 
-  const [markdown, tree, session] = await Promise.all([
+  // Check auth first — no GitHub API calls for unauthenticated users
+  const session = await getSession()
+  if (!session) redirect(`/api/auth/login?return=/docs/${slug.join('/')}`)
+
+  // Now safe to fetch
+  const [markdown, tree] = await Promise.all([
     fetchFile(filePath).catch(() => null),
     fetchFileTree(),
-    getSession(),
   ])
 
-  if (!session) redirect(`/api/auth/login?return=/docs/${slug.join('/')}`)
   if (!markdown) notFound()
 
   const html = await markdownToHtml(markdown)

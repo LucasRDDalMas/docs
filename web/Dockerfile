@@ -11,17 +11,18 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 
-# Build args for the search-index script (requires GitHub API access)
-ARG GITHUB_TOKEN
+# Non-sensitive build args (org name, repo name, docs path)
 ARG GITHUB_OWNER
 ARG GITHUB_REPO
 ARG GITHUB_DOCS_ROOT=doc
-ENV GITHUB_TOKEN=${GITHUB_TOKEN}
-ENV GITHUB_OWNER=${GITHUB_OWNER}
-ENV GITHUB_REPO=${GITHUB_REPO}
-ENV GITHUB_DOCS_ROOT=${GITHUB_DOCS_ROOT}
 
-RUN npm run build:search
+# GITHUB_TOKEN passed as a BuildKit secret — never baked into a layer
+RUN --mount=type=secret,id=github_token \
+    GITHUB_TOKEN="$(cat /run/secrets/github_token)" \
+    GITHUB_OWNER="${GITHUB_OWNER}" \
+    GITHUB_REPO="${GITHUB_REPO}" \
+    GITHUB_DOCS_ROOT="${GITHUB_DOCS_ROOT}" \
+    npm run build:search
 RUN npm run build
 
 # Stage 3: lean production image

@@ -21,7 +21,7 @@
 
 ---
 
-### Task 1: Project Scaffold
+### Task 1: Project Scaffold ✅
 
 **Files:**
 - Create: `web/package.json`
@@ -222,7 +222,7 @@ git commit -m "feat: scaffold Next.js 15 project with types and tooling"
 
 ---
 
-### Task 2: In-Memory Cache + GitHub API Client
+### Task 2: In-Memory Cache + GitHub API Client ✅
 
 **Files:**
 - Create: `web/src/lib/cache.ts`
@@ -339,7 +339,7 @@ git commit -m "feat: in-memory TTL cache and GitHub Octokit client factory"
 
 ---
 
-### Task 3: Auth — GitHub OAuth + iron-session
+### Task 3: Auth — GitHub OAuth + iron-session ✅
 
 **Files:**
 - Create: `web/src/lib/auth/session.ts`
@@ -521,7 +521,7 @@ git commit -m "feat: GitHub OAuth login/callback/logout with iron-session"
 
 ---
 
-### Task 4: GitHub Contents API + Doc File Tree
+### Task 4: GitHub Contents API + Doc File Tree ✅
 
 **Files:**
 - Create: `web/src/lib/github/contents.ts`
@@ -693,7 +693,7 @@ git commit -m "feat: GitHub Contents API — fetch files, file tree, commit"
 
 ---
 
-### Task 5: Markdown Renderer + Anchor Injection
+### Task 5: Markdown Renderer + Anchor Injection ✅
 
 **Files:**
 - Create: `web/src/lib/renderer/markdownToHtml.ts`
@@ -885,7 +885,7 @@ git commit -m "feat: markdown renderer with paragraph index injection and anchor
 
 ---
 
-### Task 6: GitHub Discussions API Layer
+### Task 6: GitHub Discussions API Layer ✅
 
 **Files:**
 - Create: `web/src/lib/github/discussions.ts`
@@ -1128,7 +1128,7 @@ git commit -m "feat: GitHub Discussions API layer and discussion body parser"
 
 ---
 
-### Task 7: Suggestion Patcher + Commit Gateway
+### Task 7: Suggestion Patcher + Commit Gateway ✅
 
 **Files:**
 - Create: `web/src/lib/suggestions/patcher.ts`
@@ -1308,7 +1308,7 @@ git commit -m "feat: suggestion patcher, commit gateway, and approve API route"
 
 ---
 
-### Task 8: Comment + Suggestion API Routes
+### Task 8: Comment + Suggestion API Routes ✅
 
 **Files:**
 - Create: `web/src/app/api/comments/route.ts`
@@ -1456,7 +1456,7 @@ git commit -m "feat: comments and suggestions REST API routes"
 
 ---
 
-### Task 9: Doc Page + App Shell
+### Task 9: Doc Page + App Shell ✅
 
 **Files:**
 - Create: `web/src/app/layout.tsx`

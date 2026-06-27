@@ -1,0 +1,21 @@
+:root {
+  --color-bg: oklch(98% 0 0);
+  --color-surface: oklch(100% 0 0);
+  --color-border: oklch(90% 0 0);
+  --color-text: oklch(18% 0 0);
+  --color-text-muted: oklch(50% 0 0);
+  --color-accent: oklch(55% 0.18 250);
+  --color-comment: oklch(85% 0.12 90 / 0.4);
+  --color-suggestion-del: oklch(65% 0.18 25 / 0.25);
+  --color-suggestion-ins: oklch(65% 0.18 145 / 0.25);
+
+  --panel-nav: 260px;
+  --panel-comments: 320px;
+
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+
+  --radius: 6px;
+  --duration: 150ms;
+}

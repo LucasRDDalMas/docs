@@ -1,0 +1,20 @@
+.tree { font-size: var(--text-sm); }
+.file {
+  display: block;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  color: var(--color-text);
+  text-decoration: none;
+}
+.file:hover { background: var(--color-border); }
+.active { background: oklch(95% 0.05 250); color: var(--color-accent); font-weight: 500; }
+.dir { margin-top: 0.25rem; }
+.dirLabel {
+  display: flex; align-items: center; gap: 0.25rem;
+  width: 100%; background: none; border: none; cursor: pointer;
+  font-size: var(--text-sm); color: var(--color-text-muted);
+  padding: 0.25rem 0.25rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.arrow { font-size: 0.7em; }
+.children { padding-left: 1rem; }

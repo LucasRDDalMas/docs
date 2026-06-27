@@ -183,3 +183,55 @@ export async function closeDiscussion(
 ): Promise<void> {
   await gql(token)(CLOSE_DISCUSSION, { id: discussionId })
 }
+
+export async function getDiscussionByNumber(
+  token: string,
+  discussionNumber: number,
+): Promise<DiscussionThread | null> {
+  const client = gql(token)
+  try {
+    const data = await client<{
+      repository: {
+        discussion: {
+          id: string
+          number: number
+          title: string
+          body: string
+          closed: boolean
+          createdAt: string
+          author: { login: string; avatarUrl: string }
+          comments: { nodes: Array<{ id: string; body: string; createdAt: string; author: { login: string; avatarUrl: string } }> }
+        }
+      }
+    }>(
+      `query($owner:String!,$repo:String!,$number:Int!){
+        repository(owner:$owner,name:$repo){
+          discussion(number:$number){
+            id number title body closed createdAt
+            author{login avatarUrl}
+            comments(first:20){nodes{id body createdAt author{login avatarUrl}}}
+          }
+        }
+      }`,
+      { owner: OWNER, repo: REPO, number: discussionNumber },
+    )
+    const d = data.repository.discussion
+    return {
+      id: d.id,
+      number: d.number,
+      title: d.title,
+      body: d.body,
+      closed: d.closed,
+      createdAt: d.createdAt,
+      author: d.author,
+      replies: d.comments.nodes.map(c => ({
+        id: c.id,
+        body: c.body,
+        createdAt: c.createdAt,
+        author: c.author,
+      })),
+    }
+  } catch {
+    return null
+  }
+}

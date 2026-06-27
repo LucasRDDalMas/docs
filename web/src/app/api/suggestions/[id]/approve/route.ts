@@ -9,29 +9,18 @@ export async function POST(
   const session = await requireAuth().catch(() => null)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { id: discussionId } = await params
-
-  const body = (await req.json()) as {
-    file: string
-    original: string
-    proposed: string
-    discussionNumber: number
-    authorLogin: string
-  }
+  const { id } = await params
+  const { discussionNumber } = await req.json() as { discussionNumber: number }
 
   const result = await commitSuggestion({
-    file: body.file,
-    original: body.original,
-    proposed: body.proposed,
-    discussionId,
-    discussionNumber: body.discussionNumber,
-    authorLogin: body.authorLogin,
+    discussionId: id,
+    discussionNumber,
     approverToken: session.accessToken,
     approverLogin: session.login,
   })
 
   if (result === 'unauthorized') {
-    return NextResponse.json({ error: 'Approval requires a different user' }, { status: 403 })
+    return NextResponse.json({ error: 'Approval requires a different user who has reacted' }, { status: 403 })
   }
   if (result === 'conflict') {
     return NextResponse.json({ error: 'Conflict — please re-submit' }, { status: 409 })

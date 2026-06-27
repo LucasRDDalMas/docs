@@ -1,0 +1,19 @@
+# Planning / tooling artifacts
+docs/superpowers/
+.superpowers/
+
+# Environment
+web/.env.local
+web/.env*.local
+
+# Generated at build time
+web/public/search-index.json
+
+# Dependencies
+web/node_modules/
+
+# Build output
+web/.next/
+
+# OS
+.DS_Store

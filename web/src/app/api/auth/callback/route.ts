@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
   }
 
   if (!code) {
-    return NextResponse.redirect(new URL('/login?error=missing_code', req.url))
+    return NextResponse.redirect(new URL('/api/auth/login?error=missing_code', req.url))
   }
 
   const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
   }
 
   if (!tokenData.access_token) {
-    return NextResponse.redirect(new URL('/login?error=oauth_failed', req.url))
+    return NextResponse.redirect(new URL('/api/auth/login?error=oauth_failed', req.url))
   }
 
   const octokit = getUserOctokit(tokenData.access_token)

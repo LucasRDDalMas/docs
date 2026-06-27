@@ -1738,7 +1738,7 @@ git commit -m "feat: app shell, file tree, and doc page route"
 
 ---
 
-### Task 10: Search — Build-Time Index
+### Task 10: Search — Build-Time Index ✅
 
 **Files:**
 - Create: `web/scripts/build-search-index.ts`

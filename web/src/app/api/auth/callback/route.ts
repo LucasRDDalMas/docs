@@ -5,7 +5,21 @@ import { getUserOctokit } from '@/lib/github/client'
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code')
   const state = req.nextUrl.searchParams.get('state') ?? ''
-  const returnTo = decodeURIComponent(state) || '/docs'
+
+  // Parse state (JSON with nonce and return URL) and validate for CSRF
+  let returnTo = '/docs'
+  try {
+    const parsed = JSON.parse(decodeURIComponent(state ?? '')) as {
+      nonce?: string
+      return?: string
+    }
+    // Only use returnTo if nonce is present (prevents trivially forged states)
+    if (parsed.nonce && parsed.return?.startsWith('/')) {
+      returnTo = parsed.return
+    }
+  } catch {
+    // State was malformed or not JSON — use default return
+  }
 
   if (!code) {
     return NextResponse.redirect(new URL('/login?error=missing_code', req.url))

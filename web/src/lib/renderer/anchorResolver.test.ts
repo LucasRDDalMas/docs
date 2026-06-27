@@ -44,5 +44,6 @@ describe('resolveAnchors', () => {
     }
     const [resolved] = resolveAnchors(HTML, [anchor])
     expect(resolved.state).toBe('detached')
+    expect(resolved.resolvedParagraphIndex).toBe(-1)
   })
 })

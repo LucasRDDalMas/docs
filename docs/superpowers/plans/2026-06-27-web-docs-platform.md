@@ -1900,7 +1900,7 @@ git commit -m "feat: build-time search index with Orama + optional MiniLM embedd
 
 ---
 
-### Task 11: Search Runtime + Modal UI
+### Task 11: Search Runtime + Modal UI ✅
 
 **Files:**
 - Create: `web/src/lib/search/client.ts`

@@ -42,8 +42,8 @@ jobs:
           secrets: |
             github_token=${{ secrets.GITHUB_TOKEN }}
           build-args: |
-            GITHUB_OWNER=${{ secrets.GITHUB_OWNER }}
-            GITHUB_REPO=${{ secrets.GITHUB_REPO }}
+            GITHUB_REPO_OWNER=${{ secrets.GITHUB_REPO_OWNER }}
+            GITHUB_REPO_NAME=${{ secrets.GITHUB_REPO_NAME }}
             GITHUB_DOCS_ROOT=doc
 
       - name: Set up Helm

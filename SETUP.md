@@ -73,25 +73,25 @@ Create a `.env.local` file (or configure in your deployment) with these variable
 |---|---|---|
 | `GITHUB_CLIENT_ID` | OAuth App → Client ID | `Ov23li...` |
 | `GITHUB_CLIENT_SECRET` | OAuth App → Client Secret | `abc123...` |
-| `GITHUB_OWNER` | Your GitHub org or username | `myorg` |
-| `GITHUB_REPO` | Repository name | `docs-poc` |
+| `GITHUB_REPO_OWNER` | Your GitHub org or username | `myorg` |
+| `GITHUB_REPO_NAME` | Repository name | `docs-poc` |
 | `GITHUB_DOCS_ROOT` | Top-level docs folder | `doc` |
 | `GITHUB_APP_ID` | GitHub App → App ID | `123456` |
 | `GITHUB_APP_PRIVATE_KEY` | Private key content (newlines as `\n`) | `-----BEGIN RSA PRIVATE KEY-----\n...` |
 | `GITHUB_APP_INSTALLATION_ID` | From installation URL | `12345678` |
 | `DISCUSSIONS_COMMENTS_CATEGORY_ID` | From GraphQL query | `DIC_kwDOAbcd...` |
 | `DISCUSSIONS_SUGGESTIONS_CATEGORY_ID` | From GraphQL query | `DIC_kwDOAbcd...` |
-| `SESSION_PASSWORD` | Random 32+ character string | See below |
+| `SESSION_SECRET` | Random 32+ character string | See below |
 | `REGISTRY` | Container registry host (for Docker deploy) | `ghcr.io/myorg` |
 
-### Generate SESSION_PASSWORD
+### Generate SESSION_SECRET
 
 ```bash
 openssl rand -hex 32
 # Output: abc123def456abc123def456abc123de
 ```
 
-Use that as your `SESSION_PASSWORD` value. Store it securely.
+Use that as your `SESSION_SECRET` value. Store it securely.
 
 ## 5. Docker Build & Push
 
@@ -101,8 +101,8 @@ If deploying to Kubernetes, build and push the image:
 # Build (with build args and secrets)
 docker build \
   --secret id=github_token,env=GITHUB_TOKEN \
-  --build-arg GITHUB_OWNER=myorg \
-  --build-arg GITHUB_REPO=docs-poc \
+  --build-arg GITHUB_REPO_OWNER=myorg \
+  --build-arg GITHUB_REPO_NAME=docs-poc \
   --build-arg GITHUB_DOCS_ROOT=doc \
   -t ghcr.io/myorg/docs-poc:latest \
   ./web
@@ -127,7 +127,7 @@ kubectl create secret generic docs-poc \
   --from-literal=GITHUB_APP_INSTALLATION_ID=12345678 \
   --from-literal=DISCUSSIONS_COMMENTS_CATEGORY_ID=DIC_kwDO... \
   --from-literal=DISCUSSIONS_SUGGESTIONS_CATEGORY_ID=DIC_kwDO... \
-  --from-literal=SESSION_PASSWORD=abc123def456abc123def456abc123de
+  --from-literal=SESSION_SECRET=abc123def456abc123def456abc123de
 ```
 
 ## 7. Helm Deploy
@@ -145,9 +145,9 @@ envFrom:
       name: docs-poc
 
 env:
-  - name: GITHUB_OWNER
+  - name: GITHUB_REPO_OWNER
     value: "myorg"
-  - name: GITHUB_REPO
+  - name: GITHUB_REPO_NAME
     value: "docs-poc"
   - name: GITHUB_DOCS_ROOT
     value: "doc"

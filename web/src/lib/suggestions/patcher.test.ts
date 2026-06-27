@@ -9,10 +9,10 @@ describe('applyPatch', () => {
     expect(result).not.toContain('original text')
   })
 
-  it('returns original markdown unchanged if text not found', () => {
+  it('returns null if text not found', () => {
     const md = '# Title\n\nSome content.'
     const result = applyPatch(md, 'missing text', 'replacement')
-    expect(result).toBe(md)
+    expect(result).toBeNull()
   })
 
   it('only replaces the first occurrence', () => {

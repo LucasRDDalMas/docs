@@ -231,7 +231,8 @@ export async function getDiscussionByNumber(
         author: c.author,
       })),
     }
-  } catch {
-    return null
+  } catch (err) {
+    if (err instanceof Error && (err as { status?: number }).status === 404) return null
+    throw err  // rethrow network errors, auth failures, etc.
   }
 }

@@ -1,4 +1,4 @@
-import { fetchFile, fetchFileSha, commitFile, buildFilePath } from '@/lib/github/contents'
+import { fetchFile, fetchFileSha, commitFile } from '@/lib/github/contents'
 import { listThumbsUpReactions } from '@/lib/github/reactions'
 import { closeDiscussion, getDiscussionByNumber } from '@/lib/github/discussions'
 import { applyPatch } from './patcher'
@@ -48,22 +48,26 @@ export async function commitSuggestion(
   if (!parsed || !('original' in parsed)) return 'unauthorized'
   const anchor = parsed as SuggestionAnchor
 
+  // anchor.file already contains the root prefix (e.g. doc/portal/index.md)
   if (!validateDocPath(anchor.file)) return 'unauthorized'
+  if (!anchor.file.startsWith(`${ROOT}/`)) return 'unauthorized'
 
-  const fullPath = buildFilePath(ROOT, anchor.file)
+  const fullPath = anchor.file  // use directly — do NOT re-apply buildFilePath
 
   try {
     const [markdown, sha] = await Promise.all([fetchFile(fullPath), fetchFileSha(fullPath)])
     const patched = applyPatch(markdown, anchor.original, anchor.proposed)
+    if (!patched) return 'conflict'
     await commitFile(fullPath, patched, sha)
     await closeDiscussion(approverToken, discussionId)
     return 'ok'
   } catch (err) {
-    if (err instanceof Error && err.message.includes('409')) {
+    if (err instanceof Error && (err as { status?: number }).status === 409) {
       // SHA conflict — retry once with a fresh fetch
       try {
         const [markdown, sha] = await Promise.all([fetchFile(fullPath), fetchFileSha(fullPath)])
         const patched = applyPatch(markdown, anchor.original, anchor.proposed)
+        if (!patched) return 'conflict'
         await commitFile(fullPath, patched, sha)
         await closeDiscussion(approverToken, discussionId)
         return 'ok'

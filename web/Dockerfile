@@ -12,15 +12,15 @@ RUN npm ci
 COPY . .
 
 # Non-sensitive build args (org name, repo name, docs path)
-ARG GITHUB_OWNER
-ARG GITHUB_REPO
+ARG GITHUB_REPO_OWNER
+ARG GITHUB_REPO_NAME
 ARG GITHUB_DOCS_ROOT=doc
 
 # GITHUB_TOKEN passed as a BuildKit secret — never baked into a layer
 RUN --mount=type=secret,id=github_token \
     GITHUB_TOKEN="$(cat /run/secrets/github_token)" \
-    GITHUB_OWNER="${GITHUB_OWNER}" \
-    GITHUB_REPO="${GITHUB_REPO}" \
+    GITHUB_REPO_OWNER="${GITHUB_REPO_OWNER}" \
+    GITHUB_REPO_NAME="${GITHUB_REPO_NAME}" \
     GITHUB_DOCS_ROOT="${GITHUB_DOCS_ROOT}" \
     npm run build:search
 RUN npm run build

@@ -2771,7 +2771,7 @@ git commit -m "feat: inline comment and suggestion UI with selection toolbar and
 
 ---
 
-### Task 13: Dockerfile + Helm Chart + GitHub Actions Pipeline
+### Task 13: Dockerfile + Helm Chart + GitHub Actions Pipeline ✅
 
 **Files:**
 - Create: `web/Dockerfile`

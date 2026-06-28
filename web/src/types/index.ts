@@ -46,6 +46,7 @@ export interface DiscussionReply {
 export interface DiscussionThread {
   id: string
   number: number
+  url: string
   title: string
   body: string
   author: { login: string; avatarUrl: string }

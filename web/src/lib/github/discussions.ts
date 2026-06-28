@@ -20,6 +20,7 @@ interface RawReply {
 interface RawDiscussion {
   id: string
   number: number
+  url: string
   title: string
   body: string
   closed: boolean
@@ -41,6 +42,7 @@ const LIST_DISCUSSIONS = `
         nodes {
           id
           number
+          url
           title
           body
           closed
@@ -88,6 +90,7 @@ export async function listDiscussionsForFile(
       const thread: DiscussionThread = {
         id: d.id,
         number: d.number,
+        url: d.url,
         title: d.title,
         body: d.body,
         closed: d.closed,
@@ -195,6 +198,7 @@ export async function getDiscussionByNumber(
         discussion: {
           id: string
           number: number
+          url: string
           title: string
           body: string
           closed: boolean
@@ -207,7 +211,7 @@ export async function getDiscussionByNumber(
       `query($owner:String!,$repo:String!,$number:Int!){
         repository(owner:$owner,name:$repo){
           discussion(number:$number){
-            id number title body closed createdAt
+            id number url title body closed createdAt
             author{login avatarUrl}
             comments(first:20){nodes{id body createdAt author{login avatarUrl}}}
           }
@@ -219,6 +223,7 @@ export async function getDiscussionByNumber(
     return {
       id: d.id,
       number: d.number,
+      url: d.url,
       title: d.title,
       body: d.body,
       closed: d.closed,

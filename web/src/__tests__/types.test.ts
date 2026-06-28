@@ -89,6 +89,7 @@ describe('types', () => {
     const thread: DiscussionThread = {
       id: 'D_1',
       number: 1,
+      url: 'https://github.com/owner/repo/discussions/1',
       title: 'Test thread',
       body: 'body',
       author: { login: 'user', avatarUrl: 'https://example.com/a.png' },

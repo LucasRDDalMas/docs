@@ -10,13 +10,17 @@ export async function listSuggestions(file: string): Promise<DiscussionThread[]>
 
 export function useSuggestions(file: string) {
   const [threads, setThreads] = useState<DiscussionThread[]>([])
+  const [loading, setLoading] = useState(false)
 
   const load = useCallback(async () => {
+    setLoading(true)
     try {
       const result = await listSuggestions(file)
       setThreads(result)
     } catch {
       // silently ignore load errors; UI shows empty state
+    } finally {
+      setLoading(false)
     }
   }, [file])
 
@@ -44,5 +48,5 @@ export function useSuggestions(file: string) {
     await load()
   }, [load])
 
-  return { threads, addSuggestion, approve }
+  return { threads, loading, addSuggestion, approve }
 }

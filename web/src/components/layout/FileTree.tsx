@@ -10,7 +10,7 @@ function Node({ node, currentPath }: { node: FileNode; currentPath: string }) {
   if (node.type === 'file') {
     // Hide _index.md — folder index pages are navigated via the folder label
     if (node.name === '_index.md') return null
-    const href = `/docs/${node.path.replace(/\.md$/, '')}`
+    const href = `/docs/${node.path.replace(/^doc\//, '').replace(/\.md$/, '')}`
     const active = currentPath === node.path
     return (
       <a href={href} className={`${styles.file} ${active ? styles.active : ''}`}>

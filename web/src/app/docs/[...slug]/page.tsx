@@ -37,13 +37,13 @@ export default async function DocPage({ params }: Props) {
 
   if (!markdown) notFound()
 
-  const html = await markdownToHtml(markdown)
+  const { html, frontmatter } = await markdownToHtml(markdown)
 
   return (
     <AppShell
       userLogin={session.login}
       nav={<FileTree nodes={tree} currentPath={filePath} />}
-      content={<DocContent html={html} filePath={filePath} />}
+      content={<DocContent html={html} frontmatter={frontmatter} filePath={filePath} slug={slug} />}
       panel={<CommentPanel file={filePath} currentUserLogin={session.login} />}
     />
   )

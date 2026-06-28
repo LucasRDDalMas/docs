@@ -7,11 +7,55 @@ import { usePanelStore } from '@/components/layout/PanelStore'
 import { SelectionToolbar } from './SelectionToolbar'
 import { SuggestionDiff } from './SuggestionDiff'
 import type { SuggestionAnchor } from '@/types'
+import type { DocMeta } from '@/lib/renderer/markdownToHtml'
 import styles from './DocContent.module.css'
 
-interface Props { html: string; filePath: string }
+interface Props {
+  html: string
+  filePath: string
+  frontmatter?: DocMeta
+  slug?: string[]
+}
 
-export function DocContent({ html, filePath }: Props) {
+function Breadcrumb({ slug }: { slug: string[] }) {
+  const crumbs = slug.map((s, i) => ({
+    label: s.replace(/-/g, ' '),
+    href: `/docs/${slug.slice(0, i + 1).join('/')}`,
+    last: i === slug.length - 1,
+  }))
+  return (
+    <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+      <a href="/docs/portal" className={styles.crumbLink}>Docs</a>
+      {crumbs.map((c) => (
+        <span key={c.href}>
+          <span className={styles.crumbSep}>/</span>
+          {c.last
+            ? <span className={styles.crumbCurrent}>{c.label}</span>
+            : <a href={c.href} className={styles.crumbLink}>{c.label}</a>}
+        </span>
+      ))}
+    </nav>
+  )
+}
+
+function DocMetaBlock({ meta }: { meta: DocMeta }) {
+  const tags = Array.isArray(meta.tags) ? meta.tags : meta.tags ? [meta.tags] : []
+  if (!meta.status && !meta.type && tags.length === 0 && !meta.description) return null
+  return (
+    <div className={styles.meta}>
+      <div className={styles.metaBadges}>
+        {meta.type && <span className={`${styles.badge} ${styles.badgeType}`}>{meta.type}</span>}
+        {meta.status && <span className={`${styles.badge} ${styles.badgeStatus}`}>{meta.status}</span>}
+        {tags.map((t) => (
+          <span key={String(t)} className={`${styles.badge} ${styles.badgeTag}`}>{String(t)}</span>
+        ))}
+      </div>
+      {meta.description && <p className={styles.metaDesc}>{meta.description}</p>}
+    </div>
+  )
+}
+
+export function DocContent({ html, filePath, frontmatter, slug }: Props) {
   const { anchor, rect } = useSelection(filePath)
   const { addComment } = useComments(filePath)
   const { addSuggestion } = useSuggestions(filePath)
@@ -44,6 +88,9 @@ export function DocContent({ html, filePath }: Props) {
 
   return (
     <div className={styles.wrapper}>
+      {slug && <Breadcrumb slug={slug} />}
+      {frontmatter && <DocMetaBlock meta={frontmatter} />}
+
       {rect && anchor && mode === null && (
         <SelectionToolbar
           rect={rect}

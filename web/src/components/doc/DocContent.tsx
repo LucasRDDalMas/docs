@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useSelection } from '@/hooks/useSelection'
 import { useComments } from '@/hooks/useComments'
 import { useSuggestions } from '@/hooks/useSuggestions'
+import { usePanelStore } from '@/components/layout/PanelStore'
 import { SelectionToolbar } from './SelectionToolbar'
 import { SuggestionDiff } from './SuggestionDiff'
 import type { SuggestionAnchor } from '@/types'
@@ -14,6 +15,7 @@ export function DocContent({ html, filePath }: Props) {
   const { anchor, rect } = useSelection(filePath)
   const { addComment } = useComments(filePath)
   const { addSuggestion } = useSuggestions(filePath)
+  const { openPanel } = usePanelStore()
   const [mode, setMode] = useState<'comment' | 'suggest' | null>(null)
 
   async function handleComment() {
@@ -22,6 +24,7 @@ export function DocContent({ html, filePath }: Props) {
     const text = window.prompt('Add a comment:')
     if (!text) return
     await addComment(anchor, text)
+    openPanel()
     setMode(null)
   }
 
@@ -35,6 +38,7 @@ export function DocContent({ html, filePath }: Props) {
       status: 'pending',
     }
     await addSuggestion(suggestionAnchor)
+    openPanel()
     setMode(null)
   }
 

@@ -1,21 +1,51 @@
 :root {
-  --color-bg: oklch(98% 0 0);
+  /* Surfaces */
+  --color-bg: oklch(97.5% 0.003 250);
   --color-surface: oklch(100% 0 0);
-  --color-border: oklch(90% 0 0);
-  --color-text: oklch(18% 0 0);
-  --color-text-muted: oklch(50% 0 0);
-  --color-accent: oklch(55% 0.18 250);
-  --color-comment: oklch(85% 0.12 90 / 0.4);
-  --color-suggestion-del: oklch(65% 0.18 25 / 0.25);
-  --color-suggestion-ins: oklch(65% 0.18 145 / 0.25);
+  --color-surface-raised: oklch(99% 0.002 250);
+  --color-border: oklch(91% 0.004 250);
+  --color-border-subtle: oklch(94% 0.002 250);
 
-  --panel-nav: 260px;
-  --panel-comments: 320px;
+  /* Text */
+  --color-text: oklch(15% 0 0);
+  --color-text-secondary: oklch(40% 0 0);
+  --color-text-muted: oklch(58% 0 0);
 
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
+  /* Accent */
+  --color-accent: oklch(52% 0.2 250);
+  --color-accent-hover: oklch(45% 0.2 250);
+  --color-accent-subtle: oklch(95% 0.06 250);
+  --color-accent-subtle-hover: oklch(92% 0.08 250);
 
+  /* Semantic */
+  --color-comment: oklch(85% 0.12 90 / 0.45);
+  --color-suggestion-del: oklch(65% 0.18 25 / 0.2);
+  --color-suggestion-ins: oklch(65% 0.18 145 / 0.2);
+  --color-danger: oklch(55% 0.2 25);
+
+  /* Layout */
+  --topbar-h: 3.5rem;
+  --panel-nav: 240px;
+  --panel-comments: 300px;
+
+  /* Typography */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+
+  /* Spacing */
+  --radius-sm: 4px;
   --radius: 6px;
-  --duration: 150ms;
+  --radius-lg: 10px;
+
+  /* Motion */
+  --duration-fast: 100ms;
+  --duration: 160ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06), 0 0 0 1px oklch(0% 0 0 / 0.04);
+  --shadow: 0 4px 12px oklch(0% 0 0 / 0.08), 0 0 0 1px oklch(0% 0 0 / 0.04);
+  --shadow-lg: 0 8px 24px oklch(0% 0 0 / 0.12), 0 0 0 1px oklch(0% 0 0 / 0.04);
 }

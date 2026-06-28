@@ -2,26 +2,37 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { font-size: 16px; }
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   font-size: var(--text-base);
-  line-height: 1.7;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a { color: var(--color-accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a:hover { color: var(--color-accent-hover); text-decoration: underline; }
 
 code, pre {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'Berkeley Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
   font-size: 0.875em;
 }
 
 pre {
-  background: oklch(96% 0 0);
+  background: oklch(97% 0.002 250);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   overflow-x: auto;
+  line-height: 1.65;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }

@@ -41,6 +41,7 @@ export default async function DocPage({ params }: Props) {
 
   return (
     <AppShell
+      userLogin={session.login}
       nav={<FileTree nodes={tree} currentPath={filePath} />}
       content={<DocContent html={html} filePath={filePath} />}
       panel={<CommentPanel file={filePath} currentUserLogin={session.login} />}

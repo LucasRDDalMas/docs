@@ -26,9 +26,10 @@ export default async function DocPage({ params }: Props) {
   const session = await getSession()
   if (!session) redirect(`/api/auth/login?return=/docs/${slug.join('/')}`)
 
-  // Now safe to fetch
+  // Now safe to fetch — try _index.md fallback for folder paths
+  const indexPath = filePath.replace(/\.md$/, '/_index.md')
   const [markdown, tree] = await Promise.all([
-    fetchFile(filePath).catch(() => null),
+    fetchFile(filePath).catch(() => fetchFile(indexPath).catch(() => null)),
     fetchFileTree(),
   ])
 

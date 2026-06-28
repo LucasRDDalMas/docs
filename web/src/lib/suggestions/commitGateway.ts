@@ -5,7 +5,7 @@ import { applyPatch } from './patcher'
 import { parseDiscussionBody } from './parser'
 import type { SuggestionAnchor } from '@/types'
 
-const ROOT = process.env.GITHUB_DOCS_ROOT ?? 'doc'
+const ROOT = process.env.GITHUB_DOCS_ROOT ?? 'docs'
 
 function validateDocPath(file: string): boolean {
   // reject traversal, absolute paths, and null bytes
@@ -48,7 +48,7 @@ export async function commitSuggestion(
   if (!parsed || !('original' in parsed)) return 'unauthorized'
   const anchor = parsed as SuggestionAnchor
 
-  // anchor.file already contains the root prefix (e.g. doc/portal/index.md)
+  // anchor.file already contains the root prefix (e.g. docs/portal/index.md)
   if (!validateDocPath(anchor.file)) return 'unauthorized'
   if (!anchor.file.startsWith(`${ROOT}/`)) return 'unauthorized'
 

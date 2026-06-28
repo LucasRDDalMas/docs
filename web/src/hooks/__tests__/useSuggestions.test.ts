@@ -13,9 +13,9 @@ describe('useSuggestions', () => {
       }),
     })
     const { listSuggestions } = await import('../useSuggestions')
-    const result = await listSuggestions('doc/test.md')
+    const result = await listSuggestions('docs/test.md')
     expect(result).toHaveLength(1)
-    expect(global.fetch).toHaveBeenCalledWith('/api/suggestions?file=doc%2Ftest.md')
+    expect(global.fetch).toHaveBeenCalledWith('/api/suggestions?file=docs%2Ftest.md')
   })
 
   it('returns empty array when threads is missing', async () => {
@@ -24,7 +24,7 @@ describe('useSuggestions', () => {
       json: async () => ({}),
     })
     const { listSuggestions } = await import('../useSuggestions')
-    const result = await listSuggestions('doc/empty.md')
+    const result = await listSuggestions('docs/empty.md')
     expect(result).toEqual([])
   })
 
@@ -34,9 +34,9 @@ describe('useSuggestions', () => {
       json: async () => ({ threads: [] }),
     })
     const { listSuggestions } = await import('../useSuggestions')
-    await listSuggestions('doc/my file.md')
+    await listSuggestions('docs/my file.md')
     expect(global.fetch).toHaveBeenCalledWith(
-      '/api/suggestions?file=doc%2Fmy%20file.md',
+      '/api/suggestions?file=docs%2Fmy%20file.md',
     )
   })
 })

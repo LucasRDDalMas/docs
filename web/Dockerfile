@@ -14,7 +14,7 @@ COPY . .
 # Non-sensitive build args (org name, repo name, docs path)
 ARG GITHUB_REPO_OWNER
 ARG GITHUB_REPO_NAME
-ARG GITHUB_DOCS_ROOT=doc
+ARG GITHUB_DOCS_ROOT=docs
 
 # GITHUB_TOKEN passed as a BuildKit secret — never baked into a layer
 RUN --mount=type=secret,id=github_token \

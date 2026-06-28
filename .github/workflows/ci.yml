@@ -44,7 +44,7 @@ jobs:
           build-args: |
             GITHUB_REPO_OWNER=${{ secrets.GITHUB_REPO_OWNER }}
             GITHUB_REPO_NAME=${{ secrets.GITHUB_REPO_NAME }}
-            GITHUB_DOCS_ROOT=doc
+            GITHUB_DOCS_ROOT=docs
 
       - name: Set up Helm
         uses: azure/setup-helm@v3

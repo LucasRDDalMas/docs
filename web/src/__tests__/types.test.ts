@@ -34,7 +34,7 @@ describe('types', () => {
 
   it('CommentAnchor shape is correct', () => {
     const anchor: CommentAnchor = {
-      file: 'doc/page.md',
+      file: 'docs/page.md',
       paragraphIndex: 2,
       highlightStart: 0,
       highlightEnd: 10,
@@ -50,7 +50,7 @@ describe('types', () => {
 
   it('ResolvedAnchor includes state and resolvedParagraphIndex', () => {
     const anchor: CommentAnchor = {
-      file: 'doc/page.md',
+      file: 'docs/page.md',
       paragraphIndex: 0,
       highlightStart: 0,
       highlightEnd: 5,
@@ -66,7 +66,7 @@ describe('types', () => {
 
   it('SuggestionAnchor shape is correct', () => {
     const suggestion: SuggestionAnchor = {
-      file: 'doc/page.md',
+      file: 'docs/page.md',
       paragraphIndex: 1,
       original: 'old text',
       proposed: 'new text',
@@ -101,7 +101,7 @@ describe('types', () => {
 
   it('SearchResult shape is correct', () => {
     const result: SearchResult = {
-      file: 'doc/page.md',
+      file: 'docs/page.md',
       section: 'portal',
       title: 'Portal Page',
       breadcrumb: 'doc > portal',

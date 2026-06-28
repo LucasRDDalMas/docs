@@ -6,7 +6,7 @@ import path from 'path'
 
 const OWNER = process.env.GITHUB_REPO_OWNER!
 const REPO = process.env.GITHUB_REPO_NAME!
-const ROOT = process.env.GITHUB_DOCS_ROOT ?? 'doc'
+const ROOT = process.env.GITHUB_DOCS_ROOT ?? 'docs'
 const SECTION_MAP: Record<string, string> = {
   portal: 'portal',
   backlog: 'backlog',

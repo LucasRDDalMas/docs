@@ -3,8 +3,8 @@ import { buildFilePath, buildCommitMessage } from './contents'
 
 describe('buildFilePath', () => {
   it('joins root and path without double slash', () => {
-    expect(buildFilePath('doc', 'portal/dashboard/index.md'))
-      .toBe('doc/portal/dashboard/index.md')
+    expect(buildFilePath('docs', 'portal/dashboard/index.md'))
+      .toBe('docs/portal/dashboard/index.md')
   })
 
   it('handles empty root', () => {
@@ -14,7 +14,7 @@ describe('buildFilePath', () => {
 
 describe('buildCommitMessage', () => {
   it('includes file path in commit message', () => {
-    const msg = buildCommitMessage('doc/portal/dashboard/index.md')
-    expect(msg).toContain('doc/portal/dashboard/index.md')
+    const msg = buildCommitMessage('docs/portal/dashboard/index.md')
+    expect(msg).toContain('docs/portal/dashboard/index.md')
   })
 })

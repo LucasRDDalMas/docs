@@ -13,9 +13,9 @@ describe('useComments', () => {
       }),
     })
     const { listComments } = await import('../useComments')
-    const result = await listComments('doc/test.md')
+    const result = await listComments('docs/test.md')
     expect(result).toHaveLength(1)
-    expect(global.fetch).toHaveBeenCalledWith('/api/comments?file=doc%2Ftest.md')
+    expect(global.fetch).toHaveBeenCalledWith('/api/comments?file=docs%2Ftest.md')
   })
 
   it('returns empty array when threads is missing', async () => {
@@ -24,7 +24,7 @@ describe('useComments', () => {
       json: async () => ({}),
     })
     const { listComments } = await import('../useComments')
-    const result = await listComments('doc/missing.md')
+    const result = await listComments('docs/missing.md')
     expect(result).toEqual([])
   })
 
@@ -34,9 +34,9 @@ describe('useComments', () => {
       json: async () => ({ threads: [] }),
     })
     const { listComments } = await import('../useComments')
-    await listComments('doc/path with spaces/file.md')
+    await listComments('docs/path with spaces/file.md')
     expect(global.fetch).toHaveBeenCalledWith(
-      '/api/comments?file=doc%2Fpath%20with%20spaces%2Ffile.md',
+      '/api/comments?file=docs%2Fpath%20with%20spaces%2Ffile.md',
     )
   })
 })

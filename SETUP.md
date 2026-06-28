@@ -103,7 +103,7 @@ docker build \
   --secret id=github_token,env=GITHUB_TOKEN \
   --build-arg GITHUB_REPO_OWNER=myorg \
   --build-arg GITHUB_REPO_NAME=docs-poc \
-  --build-arg GITHUB_DOCS_ROOT=doc \
+  --build-arg GITHUB_DOCS_ROOT=docs \
   -t ghcr.io/myorg/docs-poc:latest \
   ./web
 

@@ -22,7 +22,7 @@ export default async function DocPage({ params }: Props) {
   const slug = rawSlug.map(decodeURIComponent)
   if (!isValidSlug(slug)) notFound()
 
-  const filePath = `doc/${slug.join('/')}.md`
+  const filePath = `docs/${slug.join('/')}.md`
 
   // Check auth first — no GitHub API calls for unauthenticated users
   const session = await getSession()

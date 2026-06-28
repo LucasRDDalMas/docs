@@ -35,3 +35,56 @@
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
 }
+
+.backdrop {
+  display: none;
+}
+
+/* ── Mobile ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .panelOpen {
+    grid-template-columns: 1fr;
+  }
+
+  .nav {
+    position: fixed;
+    top: var(--topbar-h);
+    left: 0;
+    bottom: 0;
+    width: var(--panel-nav);
+    transform: translateX(-100%);
+    transition: transform var(--duration) var(--ease);
+    z-index: 40;
+    border-right: 1px solid var(--color-border);
+  }
+
+  .navVisible .nav {
+    transform: translateX(0);
+  }
+
+  .backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    top: var(--topbar-h);
+    background: oklch(0% 0 0 / 0.35);
+    z-index: 39;
+  }
+
+  .content {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .panel {
+    position: fixed;
+    inset: var(--topbar-h) 0 0 0;
+    width: 100%;
+    z-index: 40;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+}

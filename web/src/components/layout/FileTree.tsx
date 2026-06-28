@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import type { FileNode } from '@/types'
 import styles from './FileTree.module.css'
 
@@ -8,25 +9,28 @@ interface Props { nodes: FileNode[]; currentPath: string }
 function Node({ node, currentPath }: { node: FileNode; currentPath: string }) {
   const [open, setOpen] = useState(true)
   if (node.type === 'file') {
-    // Hide _index.md — folder index pages are navigated via the folder label
-    if (node.name === '_index.md') return null
+    // Hide index files — the folder label links to them instead
+    if (node.name === '_index.md' || node.name === 'index.md') return null
     const href = `/docs/${node.path.replace(/^docs\//, '').replace(/\.md$/, '')}`
     const active = currentPath === node.path
     return (
-      <a href={href} className={`${styles.file} ${active ? styles.active : ''}`}>
+      <Link href={href} className={`${styles.file} ${active ? styles.active : ''}`}>
         {node.name.replace(/\.md$/, '')}
-      </a>
+      </Link>
     )
   }
-  // If folder has _index.md, make the folder label a link to the folder page
-  const hasIndex = node.children?.some(c => c.name === '_index.md')
-  const folderHref = hasIndex ? `/docs/${node.path.replace(/^docs\//, '')}` : undefined
+  // Make folder label clickable if it has _index.md or index.md
+  const indexChild = node.children?.find(c => c.name === '_index.md' || c.name === 'index.md')
+  // Always link to the folder path — page.tsx handles _index.md / index.md fallback
+  const folderHref = indexChild
+    ? `/docs/${node.path.replace(/^docs\//, '')}`
+    : undefined
   return (
     <div className={styles.dir}>
       <button className={styles.dirLabel} onClick={() => setOpen(!open)}>
         <span className={styles.arrow}>{open ? '▾' : '▸'}</span>
-        {hasIndex && folderHref
-          ? <a href={folderHref} onClick={e => e.stopPropagation()}>{node.name}</a>
+        {indexChild && folderHref
+          ? <Link href={folderHref} onClick={e => e.stopPropagation()}>{node.name}</Link>
           : node.name}
       </button>
       {open && node.children && (

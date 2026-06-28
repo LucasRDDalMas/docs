@@ -67,6 +67,26 @@ async function getAllMarkdownFiles(
   )
 }
 
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/```[\s\S]*?```/g, '')                     // fenced code blocks (remove entirely)
+    .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')     // [[link|text]] → text  (before backtick strip)
+    .replace(/\[\[([^\]]+)\]\]/g, '$1')                 // [[link]] → link text
+    .replace(/`([^`\n]+)`/g, '$1')                      // `code` → code (keep text, strip markers)
+    .replace(/!\[.*?\]\(.*?\)/g, '')                    // images
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')            // links → text
+    .replace(/\*{1,3}([^*\n]+)\*{1,3}/g, '$1')         // bold/italic
+    .replace(/_{1,3}([^_\n]+)_{1,3}/g, '$1')           // underscore emphasis
+    .replace(/^#+\s+/gm, '')                            // headings
+    .replace(/^[-*+]\s+/gm, '')                         // bullet points
+    .replace(/^\d+\.\s+/gm, '')                         // numbered lists
+    .replace(/^[|>]/gm, '')                             // tables, blockquotes
+    .replace(/[-|]{3,}/g, '')                           // table dividers
+    .replace(/\{#[^}]+\}/g, '')                         // heading anchors
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 function chunkByHeadings(content: string): Array<{ heading: string; body: string }> {
   const lines = content.split('\n')
   const chunks: Array<{ heading: string; body: string }> = []
@@ -124,12 +144,13 @@ async function main() {
     const title = filePath.split('/').pop()?.replace(/\.md$/, '') ?? ''
 
     for (const chunk of chunks) {
+      const sectionHeading = chunk.heading || title
       await insert(db, {
         file: filePath,
         section,
-        title,
+        title: sectionHeading,
         breadcrumb: chunk.heading ? `${title} › ${chunk.heading}` : title,
-        body: chunk.body.slice(0, 500),
+        body: stripMarkdown(chunk.body).slice(0, 400),
       })
     }
   }

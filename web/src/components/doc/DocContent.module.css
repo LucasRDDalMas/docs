@@ -228,3 +228,16 @@
 }
 
 .article strong { font-weight: 600; }
+
+/* Inline comment highlights */
+.commentHighlight {
+  background: oklch(93% 0.12 80 / 55%);
+  border-radius: 2px;
+  cursor: pointer;
+  padding-inline: 1px;
+  transition: background var(--duration-fast);
+}
+
+.commentHighlight:hover {
+  background: oklch(82% 0.18 80 / 80%);
+}

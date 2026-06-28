@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { CommentAnchor } from '@/types'
 
 interface SelectionState {
@@ -7,13 +7,18 @@ interface SelectionState {
   rect: DOMRect | null
 }
 
+// SSR-safe: only used in 'use client' components, but Next.js pre-renders them on the server
+const useClientLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
+
 export function useSelection(docPath: string): SelectionState {
   const [state, setState] = useState<SelectionState>({ anchor: null, rect: null })
+  const savedRange = useRef<Range | null>(null)
 
   useEffect(() => {
     const handler = () => {
       const sel = window.getSelection()
       if (!sel || sel.isCollapsed || !sel.rangeCount) {
+        savedRange.current = null
         setState({ anchor: null, rect: null })
         return
       }
@@ -30,6 +35,7 @@ export function useSelection(docPath: string): SelectionState {
       if (!highlightText) return
 
       const rect = range.getBoundingClientRect()
+      savedRange.current = range.cloneRange()
       setState({
         rect,
         anchor: {
@@ -45,6 +51,17 @@ export function useSelection(docPath: string): SelectionState {
     document.addEventListener('mouseup', handler)
     return () => document.removeEventListener('mouseup', handler)
   }, [docPath])
+
+  // React re-renders clear the browser's text selection. Restore it before each paint.
+  // No dependency array: must run after every commit, not just when anchor changes,
+  // because any child re-render (e.g. toolbar mounting) can also clear the selection.
+  useClientLayoutEffect(() => {
+    if (!state.anchor || !savedRange.current) return
+    const sel = window.getSelection()
+    if (!sel || !sel.isCollapsed) return  // already has a selection, don't clobber it
+    sel.removeAllRanges()
+    sel.addRange(savedRange.current)
+  })
 
   return state
 }

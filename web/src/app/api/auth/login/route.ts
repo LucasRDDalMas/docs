@@ -12,7 +12,7 @@ export function GET(req: NextRequest) {
   // URLSearchParams encodes values automatically — no manual encodeURIComponent needed
   const params = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID!,
-    scope: 'read:user user:email',
+    scope: 'read:user user:email repo',
     state,
   })
   return NextResponse.redirect(

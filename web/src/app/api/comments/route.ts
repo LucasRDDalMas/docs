@@ -9,9 +9,10 @@ const CAT = process.env.DISCUSSIONS_COMMENTS_CATEGORY_ID!
 export async function GET(req: NextRequest) {
   const session = await requireAuth().catch(() => null)
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!CAT) return NextResponse.json({ threads: [] })
   const file = req.nextUrl.searchParams.get('file')
   if (!file) return NextResponse.json({ error: 'file param required' }, { status: 400 })
-  const threads = await listDiscussionsForFile(session.accessToken, file, CAT)
+  const threads = await listDiscussionsForFile(session.accessToken, file, CAT).catch(() => [])
   return NextResponse.json({ threads })
 }
 

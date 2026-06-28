@@ -13,9 +13,33 @@ const SECTION_MAP: Record<string, string> = {
   glossary: 'glossary',
 }
 
+function walkLocal(dir: string, repoRoot: string): Array<{ path: string; content: string }> {
+  const results: Array<{ path: string; content: string }> = []
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) {
+      results.push(...walkLocal(full, repoRoot))
+    } else if (entry.name.endsWith('.md')) {
+      const rel = path.relative(repoRoot, full).replace(/\\/g, '/')
+      results.push({ path: rel, content: fs.readFileSync(full, 'utf8') })
+    }
+  }
+  return results
+}
+
 async function getAllMarkdownFiles(
   octokit: Octokit,
 ): Promise<Array<{ path: string; content: string }>> {
+  // Prefer local filesystem — works without GitHub API during local dev
+  const localRoot = path.join(process.cwd(), '..', ROOT)
+  if (fs.existsSync(localRoot)) {
+    console.log(`Reading docs from local filesystem: ${localRoot}`)
+    const repoRoot = path.join(process.cwd(), '..')
+    return walkLocal(localRoot, repoRoot)
+  }
+
+  // CI / Docker build: fetch from GitHub API
+  console.log('Local doc folder not found — fetching from GitHub API')
   const { data } = await octokit.rest.git.getTree({
     owner: OWNER,
     repo: REPO,

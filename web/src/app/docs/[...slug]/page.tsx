@@ -9,11 +9,12 @@ import { DocContent } from '@/components/doc/DocContent'
 
 interface Props { params: Promise<{ slug: string[] }> }
 
-const SAFE_SEGMENT = /^[a-zA-Z0-9_.\- ]+$/
+// Allow letters, numbers, spaces, hyphens, underscores, dots — but no traversal
+const SAFE_SEGMENT = /^[a-zA-Z0-9 _.\-]+$/
 
 function isValidSlug(segments: string[]): boolean {
   return segments.length > 0 &&
-    segments.every(s => SAFE_SEGMENT.test(s) && !s.includes('..') && s.length > 0)
+    segments.every(s => s.length > 0 && !s.includes('..') && SAFE_SEGMENT.test(s))
 }
 
 export default async function DocPage({ params }: Props) {

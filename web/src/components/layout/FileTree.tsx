@@ -8,6 +8,8 @@ interface Props { nodes: FileNode[]; currentPath: string }
 function Node({ node, currentPath }: { node: FileNode; currentPath: string }) {
   const [open, setOpen] = useState(true)
   if (node.type === 'file') {
+    // Hide _index.md — folder index pages are navigated via the folder label
+    if (node.name === '_index.md') return null
     const href = `/docs/${node.path.replace(/\.md$/, '')}`
     const active = currentPath === node.path
     return (
@@ -16,11 +18,16 @@ function Node({ node, currentPath }: { node: FileNode; currentPath: string }) {
       </a>
     )
   }
+  // If folder has _index.md, make the folder label a link to the folder page
+  const hasIndex = node.children?.some(c => c.name === '_index.md')
+  const folderHref = hasIndex ? `/docs/${node.path.replace(/^doc\//, '')}` : undefined
   return (
     <div className={styles.dir}>
       <button className={styles.dirLabel} onClick={() => setOpen(!open)}>
         <span className={styles.arrow}>{open ? '▾' : '▸'}</span>
-        {node.name}
+        {hasIndex && folderHref
+          ? <a href={folderHref} onClick={e => e.stopPropagation()}>{node.name}</a>
+          : node.name}
       </button>
       {open && node.children && (
         <div className={styles.children}>

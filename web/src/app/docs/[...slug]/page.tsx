@@ -18,7 +18,8 @@ function isValidSlug(segments: string[]): boolean {
 }
 
 export default async function DocPage({ params }: Props) {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
+  const slug = rawSlug.map(decodeURIComponent)
   if (!isValidSlug(slug)) notFound()
 
   const filePath = `doc/${slug.join('/')}.md`

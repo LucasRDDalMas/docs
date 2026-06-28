@@ -10,6 +10,7 @@ web/.env*.local
 web/public/search-index.json
 
 # Dependencies
+node_modules/
 web/node_modules/
 
 # Build output
